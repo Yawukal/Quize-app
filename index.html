@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Quize-app</title>
+</head>
+
+<body>
+    <div class="quiz-container" id="quiz">
+        <div class="quiz-header">
+            <h2 id="question">Question text</h2>
+            <ul>
+                <li>
+                    <input type="radio" id="a" name="answer" class="answer">
+                    <label id="a_text" for="b">question</label>
+                </li>
+                <li>
+                    <input type="radio" id="b" name="answer" class="answer">
+                    <label id="b_text" for="c">question</label>
+                </li>
+                <li>
+                    <input type="radio" id="c" name="answer" class="answer">
+                    <label id="c_text" for="c">question</label>
+                </li>
+                <li>
+                    <input type="radio" id="d" name="answer" class="answer">
+                    <label id="d_text" for="d">question</label>
+                </li>
+            </ul>
+        </div>
+        <button id="submit">submit</button>
+    </div>
+
+
+
+    <script>
+        const quizData = [
+            {
+                question: "how old Is yawukal?",
+                a: '23',
+                b: "24",
+                c: "27",
+                d: "29",
+                correct: "c",
+            },
+            {
+                question: "what is the most used programming in 2021",
+                a: "javascript",
+                b: "java",
+                c: "c++",
+                d: "phyton",
+                correct: "a",
+            },
+            {
+                question: "who is the prisedant of the united states 2021?",
+                a: 'Obama',
+                b: "Trump",
+                c: "Yawukal",
+                d: "Biden",
+                correct: "d",
+            },
+            {
+                question: "what does HTML stand for",
+                a: "Hypertext Markup Language",
+                b: "Cascading Style Sheets",
+                c: "a scripting languages",
+                d: "jason object Notation",
+                correct: "a",
+            },
+            {
+                question: "Which is the capital and largest city of Ethiopia? ",
+                a: "Addis Abebaa",
+                b: "Mekele",
+                c: "Hawasa",
+                d: "Gondar",
+                correct: "a",
+
+            },
+
+
+        ];
+        const quiz = document.getElementById("quiz");
+        const answerEls = document.querySelectorAll(".answer");
+        const questionEl = document.getElementById("question");
+        const a_text = document.getElementById("a_text");
+        const b_text = document.getElementById("b_text");
+        const c_text = document.getElementById("c_text");
+        const d_text = document.getElementById("d_text");
+        const submitBtn = document.getElementById("submit");
+
+
+
+
+
+        let currentQuiz = 0;
+        let score = 0;
+        loadQuize();
+        function loadQuize() {
+
+            deSelectAnswers();
+            const currentQuizDate = quizData[currentQuiz]
+            questionEl.innerText = currentQuizDate.question;
+            a_text.innerText = currentQuizDate.a;
+            b_text.innerText = currentQuizDate.b;
+            c_text.innerText = currentQuizDate.c;
+            d_text.innerText = currentQuizDate.d;
+
+
+        }
+
+        function getSelected() {
+
+            let answer = undefined;
+            answerEls.forEach(function (answerEl) {
+                if (answerEl.checked) {
+                    return answer = answerEl.id;
+                }
+            });
+
+            return answer;
+        };
+
+        function deSelectAnswers() {
+            answerEls.forEach(function (answerEl) {
+                answerEl.checked = false;
+            })
+
+        }
+
+
+
+        submitBtn.addEventListener("click", function () {
+            const answer = getSelected();
+
+            if (answer) {
+                if (answer === quizData[currentQuiz].correct) {
+                    score++;
+                }
+
+                currentQuiz++;
+                if (currentQuiz < quizData.length) {
+                    loadQuize();
+                } else {
+                    quiz.innerHTML = `<h2> you answerd correctly at ${score}/${quizData.length} questions?</h2>
+                    <button onClick = "location.reload()">reload</button>;`
+
+                }
+
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>
